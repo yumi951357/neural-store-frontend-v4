@@ -1,36 +1,28 @@
+// ====== CONFIG ======
 const API_URL = "https://fiverr-automation-backend.onrender.com";
+const API_KEY = "brotherkey123";  // 与后端一致
 
-async function runPipeline() {
-  const task = document.getElementById('task').value.trim();
-  const status = document.getElementById('status');
-  const result = document.getElementById('result');
+// 显示 API 基址，便于排错
+document.getElementById("apiLabel").textContent = API_URL.replace(/^https?:\/\//,'');
 
-  if (!task) {
-    status.innerText = "Please enter a task first.";
-    return;
+// 统一请求封装
+async function call(endpoint, payload) {
+  const res = await fetch(`${API_URL}${endpoint}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": API_KEY
+    },
+    body: JSON.stringify(payload)
+  });
+  // Render/后端可能返回非 2xx 但带有 JSON
+  let dataText = await res.text();
+  try { dataText = JSON.parse(dataText); } catch(_) {}
+  if (!res.ok) {
+    const msg = (dataText && dataText.detail) || res.status + " " + res.statusText;
+    throw new Error(`API ${endpoint} failed: ${msg}`);
   }
-
-  status.innerText = "Agent 1: Generating content...";
-
-  try {
-    // 只调用 generator，不链式调用
-    const response = await fetch(`${API_URL}/neural/generator`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": "brotherkey123"
-      },
-      body: JSON.stringify({ prompt: task })
-    });
-    
-    const data = await response.json();
-    status.innerText = "✅ Complete.";
-    result.innerText = data.output || "No output received.";
-
-  } catch (err) {
-    status.innerText = "❌ Error";
-    result.innerText = "Error: " + err.message;
-  }
+  return typeof dataText === "string" ? { output: dataText } : dataText;
 }
 
-window.runPipeline = runPipeline;
+// 参数拼装 → 给 generator 的 prompt 增强上下文
