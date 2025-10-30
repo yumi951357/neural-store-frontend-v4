@@ -26,3 +26,7 @@ async function call(endpoint, payload) {
 }
 
 // 参数拼装 → 给 generator 的 prompt 增强上下文
+
+// 暴露函数到全局作用域
+window.runPipeline = runPipeline;
+console.log("✅ Neural Store Pipeline registered.");
