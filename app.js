@@ -1,4 +1,3 @@
-```javascript
 const API_URL = "https://fiverr-automation-backend.onrender.com";
 
 async function runPipeline() {
@@ -58,4 +57,3 @@ async function runPipeline() {
 }
 
 window.runPipeline = runPipeline;
-```
