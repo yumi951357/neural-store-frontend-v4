@@ -27,6 +27,29 @@ async function call(endpoint, payload) {
 
 // 参数拼装 → 给 generator 的 prompt 增强上下文
 
+// 主函数定义
+async function runPipeline() {
+  const task = document.getElementById('task').value.trim();
+  const status = document.getElementById('status');
+  const result = document.getElementById('result');
+
+  if (!task) {
+    status.innerText = "Please enter a task first.";
+    return;
+  }
+
+  status.innerText = "Generating content...";
+
+  try {
+    const data = await call("/neural/generator", { prompt: task });
+    result.innerText = data.output || "No output received.";
+    status.innerText = "✅ Complete.";
+  } catch (err) {
+    status.innerText = "❌ Error";
+    result.innerText = "Error: " + err.message;
+  }
+}
+
 // 暴露函数到全局作用域
 window.runPipeline = runPipeline;
 console.log("✅ Neural Store Pipeline registered.");
