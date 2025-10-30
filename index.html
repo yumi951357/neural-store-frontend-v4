@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neural Store Dashboard</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <h1>Neural Store Dashboard</h1>
+  <p>Run your 3 digital employees on the Render backend</p>
+
+  <div class="task-box">
+    <textarea id="task" placeholder="Generate a full business plan for an AI social media management startup"></textarea>
+    <button onclick="runPipeline()">Run Neural Pipeline</button>
+  </div>
+
+  <div id="status" class="status">Awaiting input...</div>
+
+  <h2>Output</h2>
+  <pre id="result" class="output">No output yet.</pre>
+
+  <script src="./app.js"></script>
+</body>
+</html>

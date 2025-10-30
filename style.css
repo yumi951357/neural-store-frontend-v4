@@ -1,0 +1,58 @@
+body {
+  background-color: #000;
+  color: #00ffc6;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+  padding: 50px;
+}
+
+h1 {
+  font-size: 2.5em;
+  color: #00ffc6;
+  text-shadow: 0 0 20px #00ffc6, 0 0 40px #008f7a;
+}
+
+.task-box {
+  margin: 20px auto;
+}
+
+textarea {
+  width: 80%;
+  height: 100px;
+  background: #111;
+  color: #00ffc6;
+  border: 1px solid #00ffc6;
+  padding: 10px;
+  font-size: 1em;
+}
+
+button {
+  background-color: #00ffc6;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #00cc99;
+}
+
+.status {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.output {
+  background: #111;
+  padding: 20px;
+  color: #00ffc6;
+  border: 1px solid #00ffc6;
+  width: 80%;
+  margin: 20px auto;
+  text-align: left;
+  white-space: pre-wrap;
+}
