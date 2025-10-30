@@ -13,7 +13,8 @@ async function runPipeline() {
   status.innerText = "Agent 1: Generating content...";
 
   try {
-    const genRes = await fetch(`${API_URL}/neural/generator`, {
+    // 只调用 generator，不链式调用
+    const response = await fetch(`${API_URL}/neural/generator`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,34 +22,10 @@ async function runPipeline() {
       },
       body: JSON.stringify({ prompt: task })
     });
-    const gen = await genRes.json();
-
-    status.innerText = "Agent 2: Refining content...";
-
-    const refRes = await fetch(`${API_URL}/neural/refiner`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": "brotherkey123"
-      },
-      body: JSON.stringify({ text: gen.output })
-    });
-    const ref = await refRes.json();
-
-    status.innerText = "Agent 3: Verifying output...";
-
-    const verRes = await fetch(`${API_URL}/neural/verifier`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": "brotherkey123"
-      },
-      body: JSON.stringify({ text: ref.output })
-    });
-    const ver = await verRes.json();
-
+    
+    const data = await response.json();
     status.innerText = "✅ Complete.";
-    result.innerText = ver.output || "No output received.";
+    result.innerText = data.output || "No output received.";
 
   } catch (err) {
     status.innerText = "❌ Error";
